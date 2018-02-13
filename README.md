@@ -32,3 +32,7 @@ we use:
 which is still repeating ourselves, but the code is much more cleaner. The only thing that is different is the colour parameter, which if we look back is c.
 - Example: `(foo (+ 1 1) 4)` will first evaluate the first parameter to 2 and then start applying the parameters to the functions body. Evaluation also goes from left to right.
 - *Predicates* are primitives or in some cases functions that produce a boolean value.
+
+### February 13th 2018 ###
+- Using the Stepper allow you to run through all the steps of the evaluation of the code.
+- You can right click on a definition of an object or function for example and can see "Enter Dr.Racket help desk" which is the full documentation for the BSL language.
