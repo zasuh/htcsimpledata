@@ -36,3 +36,68 @@ which is still repeating ourselves, but the code is much more cleaner. The only 
 ### February 13th 2018 ###
 - Using the Stepper allow you to run through all the steps of the evaluation of the code.
 - You can right click on a definition of an object or function for example and can see "Enter Dr.Racket help desk" which is the full documentation for the BSL language.
+
+### February 14th 2018 ###
+- Learning the recipe "How To Design Functions" to design functions which operate on primitive data.
+- *First* is the signature, purpose and stub of the function.
+```
+; ; Number -> Number (Signature)
+; ; Produce 2 times the given number (Purpose)
+
+(define (double n) 0) this is the stub
+```
+
+-*Second* is adding examples.
+```
+; ; Number -> Number (Signature)
+; ; Produce 2 times the given number (Purpose)
+(check-expect (double 3) 6) ;example
+(check-expect (double 4.2) 8.4) ;example
+
+(define (double n) 0) this is the stub
+```
+
+-*Third* is inventory, meaning the template and constants.
+```
+; ; Number -> Number (Signature)
+; ; Produce 2 times the given number (Purpose)
+(check-expect (double 3) 6) ;example
+(check-expect (double 4.2) 8.4) ;example
+
+(define (double n) 0) ;this is the stub
+
+(define (double n) ;this is the template
+  (...n))
+```
+
+-*Fourth* is the code body.
+```
+; ; Number -> Number (Signature)
+; ; Produce 2 times the given number (Purpose)
+(check-expect (double 3) 6) ;example
+(check-expect (double 4.2) (* 2 4.2) ;example
+
+(define (double n) 0) ;this is the stub
+
+;(define (double n) ;this is the template
+ ; (...n))
+
+(define (double n) ;function body or how the function works
+  (* 2 n))
+```
+
+-*Fifth* and finally is testing and debugging, which consists just by running and checking to see if the code works, correcting the mistakes along the way.
+```
+;; Number -> Number
+;; Produces 2 time the given number
+(check-expect (double 3) 6) ;testing
+(check-expect (double 4.2) 8.4) ;testing
+
+;(define (double n) 0) ;this is the stub
+;(define (double n) ;this is the template
+;  (... n))
+
+(define (double n) 
+  (* 2 n))
+->Both tests passed!
+```
