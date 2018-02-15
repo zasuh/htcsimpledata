@@ -101,3 +101,11 @@ which is still repeating ourselves, but the code is much more cleaner. The only 
   (* 2 n))
 ->Both tests passed!
 ```
+
+### February 15th 2018 ###
+- The signature should be what the function gets as a parameter and outputs, think in primitive types.
+- The purpose should be a more elaborate description of what the function has to do.
+- `check-expect` should have some good exaples of how the function should run. Try different primitive types, write at least two tests.
+- Example should contain the standard `(define (nameOfFunction parameter) value)` syntax, usually with a dummy value like 0 or maybe an empty string.
+- The template should contain a dummy function body ie: `(... parameter)`
+- If a test fails `(check-expect)`, it could be that the function definition is wrong, the test is wrong or both are wrong. Check the test first before checking the function definition.
