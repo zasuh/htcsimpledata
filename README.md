@@ -126,3 +126,22 @@ which is still repeating ourselves, but the code is much more cleaner. The only 
 (define (image-area img)
   (* (image-width img) (image-height img)))
 ```
+- When designing functions where the output is a boolean, the purpose has to be very clear WHEN the function should produce true or in some cases when it should produce false.
+- Another example from today's lesson, where the case can be true, false or both sides of the rectangle can be the same, which means we can't really determine whether or not it's tall or not:
+```
+(require 2htdp/image)
+;; Image -> Boolean
+;; Produce true if the image is tall (height is greater than width)
+(check-expect (tall? (rectangle 2 3 "solid" "red")) true)
+(check-expect (tall? (rectangle 3 2 "solid" "red")) false)
+(check-expect (tall? (rectangle 3 3 "solid" "red")) false)
+
+; stub(define (tall? img) false)
+; template(define (tall? img
+    ;(... img))
+
+(define (tall? img)
+  (if (> (image-height img) (image-width img))
+      true
+      false))
+```
