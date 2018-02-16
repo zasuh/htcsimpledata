@@ -109,3 +109,20 @@ which is still repeating ourselves, but the code is much more cleaner. The only 
 - Example should contain the standard `(define (nameOfFunction parameter) value)` syntax, usually with a dummy value like 0 or maybe an empty string.
 - The template should contain a dummy function body ie: `(... parameter)`
 - If a test fails `(check-expect)`, it could be that the function definition is wrong, the test is wrong or both are wrong. Check the test first before checking the function definition.
+
+### February 16th 2018 ###
+- Using the recipe for defining the function:
+```
+(require 2htdp/image)
+
+;; Image -> Natural Number
+;; Produce image width * height (area)
+(check-expect (image-area (rectangle 2 3 "solid" "red")) (* 2 3))
+
+; stub (define (image-area img) 0)
+; template(define (image-area img)
+  ;(... img))
+
+(define (image-area img)
+  (* (image-width img) (image-height img)))
+```
