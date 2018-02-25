@@ -148,7 +148,7 @@ which is still repeating ourselves, but the code is much more cleaner. The only 
 
 ### February 25th 2018 ###
 - DESIGN a function that consumes a string and determines whether its length is
-less than 5 using the recipe:
+less than 5 using the function recipe:
 ```
 ;; String -> Boolean
 ;; Compares the string length to 5 characters and outputs true or false
