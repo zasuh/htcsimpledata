@@ -145,3 +145,24 @@ which is still repeating ourselves, but the code is much more cleaner. The only 
       true
       false))
 ```
+
+### February 25th 2018 ###
+- DESIGN a function that consumes a string and determines whether its length is
+less than 5 using the recipe:
+```
+;; String -> Boolean
+;; Compares the string length to 5 characters and outputs true or false
+
+(check-expect (less-than-5? "") true)
+(check-expect (less-than-5? "aaa") true)
+(check-expect (less-than-5? "bbbbbb") false)
+(check-expect (less-than-5? "123456") false)
+
+;(define (less-than-5? s) true)stub
+
+;(define (less-than-5? s)
+;  (...s)) template
+
+(define (less-than-5? s)
+  (< (string-length s) 5))
+```
