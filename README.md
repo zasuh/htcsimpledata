@@ -166,3 +166,29 @@ less than 5 using the function recipe:
 (define (less-than-5? s)
   (< (string-length s) 5))
 ```
+
+### February 26th 2018 ###
+- Design a function to put a box around a given image.
+```
+(require 2htdp/image)
+
+; Image -> Image
+; Use boxify around an image
+(check-expect (boxify (circle 10 "solid" "red"))
+              (overlay (rectangle 22 22 "outline" "black")
+                       (circle 10 "solid" "red")))
+
+(check-expect (boxify (circle 10 "solid" "blue"))
+              (overlay (rectangle 22 22 "outline" "black")
+                       (circle 10 "solid" "blue")))
+
+; stub (define (boxify i) (circle 2 "solid" "green"))
+
+(define (boxify i)
+  (overlay (rectangle (+ (image-width i) 2)
+                      (+ (image-height i) 2)
+                      "outline"
+                      "black")
+           i))
+```
+I had to constantly check the solution for this one. It completely messed with me on how the recipe was suppose to be implemented.
