@@ -192,3 +192,19 @@ less than 5 using the function recipe:
            i))
 ```
 I had to constantly check the solution for this one. It completely messed with me on how the recipe was suppose to be implemented.
+
+### February 27th 2018 ###
+``` 
+(require 2htdp/image)
+
+; Image -> Boolean
+; Takes two images, compares, produces true if the first is larger
+(check-expect (larger? (circle 3 "solid" "red") (circle 1 "solid" "red")) true)
+(check-expect (larger? (circle 3 "solid" "red") (circle 4 "solid" "red")) false)
+(check-expect (larger? (circle 6 "solid" "red") (circle 4 "solid" "red")) true)
+
+; (define (larger? img) true) stub
+; (define (larger? img)
+;    (...img) example
+```
+This one kicked my ass as well. I knew there was something similar to larger? but couldn't find what I was looking for.
