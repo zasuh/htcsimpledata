@@ -208,3 +208,26 @@ I had to constantly check the solution for this one. It completely messed with m
 ;    (...img) example
 ```
 This one kicked my ass as well. I knew there was something similar to larger? but couldn't find what I was looking for.
+
+### Feburary 28th 2018 ###
+```
+(require 2htdp/image)
+
+; Image -> Boolean
+; Takes two images, compares, produces true if the first is larger or false if not.
+(check-expect (larger? (circle 3 "solid" "red") (circle 1 "solid" "red")) true)
+(check-expect (larger? (circle 3 "solid" "red") (circle 4 "solid" "red")) false)
+(check-expect (larger? (circle 6 "solid" "red") (circle 4 "solid" "red")) true)
+
+; (define (larger? img) true) stub
+
+; (define (larger? img)
+;    (...img) example
+
+(define (larger? image1 image2)
+  (if (and (> (image-width image1) (image-width image2))
+           (> (image-height image1) (image-height image2)))
+      true
+      false))
+```
+Finished the problem from yesterday.
