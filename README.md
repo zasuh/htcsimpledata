@@ -232,3 +232,17 @@ This one kicked my ass as well. I knew there was something similar to larger? bu
 ```
 Finished the problem from yesterday.
 - From the evaluation section, I would need more tests to see if the function can pass on ALL cases. Other than that my solution is solid.
+
+```
+(define (aspect-ratio img)
+  (cond [Q A]
+        [Q A]
+        [Q A]))
+```
+The conditional expressions are kind of like `else...if` statements in BSL. You ask a question and get an answer if the condition evaluates properly.
+```
+(define (aspect-ratio img)
+  (cond [(> (image-height img) (image-width img)) "tall"]
+        [(= (image-height img) (image-width img) "square"]
+        [else "wide"]))
+```
