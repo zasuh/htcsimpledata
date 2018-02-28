@@ -231,3 +231,4 @@ This one kicked my ass as well. I knew there was something similar to larger? bu
       false))
 ```
 Finished the problem from yesterday.
+- From the evaluation section, I would need more tests to see if the function can pass on ALL cases. Other than that my solution is solid.
