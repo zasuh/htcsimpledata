@@ -246,3 +246,6 @@ The conditional expressions are kind of like `else...if` statements in BSL. You 
         [(= (image-height img) (image-width img) "square"]
         [else "wide"]))
 ```
+
+### March 1st 2018 ###
+- In any program we have a *problem domain* ie: "a light is red" and in the `program` it might be represented with `0`, `1` would be yellow and `2` might be green. Basics of data definitions.
