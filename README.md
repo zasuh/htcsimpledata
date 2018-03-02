@@ -249,3 +249,33 @@ The conditional expressions are kind of like `else...if` statements in BSL. You 
 
 ### March 1st 2018 ###
 - In any program we have a *problem domain* ie: "a light is red" and in the `program` it might be represented with `0`, `1` would be yellow and `2` might be green. Basics of data definitions.
+
+### March 2nd 2018 ###
+```
+;; CityName is String
+;; interpretation: the name of a city
+(define CN1 "Boston")
+(define CN2 "Vancouver")
+#;
+(define (fn-for-city-name cn)
+  (... cn)
+  )
+
+;; Template rules used
+;; - atomic non-distinct rule: String
+
+;; Functions:
+
+;; CityName -> Boolean
+;; Produce true if given city is Hogsmede
+(check-expect (best? "Boston") false)
+(check-expect (best? "Hogsmede") true)
+
+;(define (best? cn) false) stub
+
+; took template from CityName
+(define (best? cn)
+  (if(string=? cn "Hogsmede")
+      true
+      false))
+```
