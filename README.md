@@ -305,6 +305,8 @@ row has 32 seats. (Just the seat number, not the row number.)
 ;; Template rules used:
 ;; -atomic non-distinct: Natural[1, 32]
 ```
+
+- Enumeration:
 ```
 #;
 PROBLEM:
@@ -333,4 +335,28 @@ PROBLEM:
 ;; -atomic distinct value: "A"
 ;; -atomic distinct value: "B"
 ;; -atomic distinct value: "C"
+```
+
+-Itemization:
+```
+;PROBLEM:
+
+;Consider designing the system for controlling a New Year's Eve
+;display. Design a data definition to represent the current state 
+;of the countdown, which falls into one of three categories: 
+
+; - not yet started
+; - from 10 to 1 seconds before midnight
+; - complete (Happy New Year!)
+
+;; CountDown is one of:
+;; - false
+;; - Natuaral[1, 10]
+;; - "complete"
+;; interp. false means countdown has not yet started, natural means countdown is running
+;; and how many second left, "complete" means countdown is over
+(define CD1 false)
+(define CD2 10)
+(define CD3 1)
+(define CD4 "complete")
 ```
