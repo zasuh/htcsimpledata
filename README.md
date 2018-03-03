@@ -359,4 +359,16 @@ PROBLEM:
 (define CD2 10)
 (define CD3 1)
 (define CD4 "complete")
+#;
+(define (fn-for-countdown c)
+  (cond [(false? c) (...)]
+        [(and (number? c) (<= 1 c) (<= c 10)) (... c)] ;mixed data itemization
+        [else (...)])
+  )
+
+;; Template rules used:
+;; -one of: 3 cases
+;; -atomic distinct: false
+;; -atomic non-distinct: Natural [1, 10]
+;; -atomic distinct: "complete"
 ```
