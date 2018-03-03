@@ -279,3 +279,58 @@ The conditional expressions are kind of like `else...if` statements in BSL. You 
       true
       false))
 ```
+
+### March 3rd 2018 ###
+- Examples of *Data definition recipe*:
+```
+#;
+PROBLEM:
+Imagine that you are designing a program to manage ticket sales for a
+theatre. (Also imagine that the theatre is perfectly rectangular in shape!) 
+Design a data definition to represent a seat number in a row, where each 
+row has 32 seats. (Just the seat number, not the row number.)
+ 
+
+;; SeatNum is Natural[1, 32]
+;; interp. seat numbers in a row, 1 and 32 are aisle seats
+(define SN1 1) ;aisle
+(define SN2 12) ;middle
+(define SN3 32) ;aisle
+
+#;
+(define (fn-for-seat-num sn)
+  (... sn)
+  )
+
+;; Template rules used:
+;; -atomic non-distinct: Natural[1, 32]
+```
+```
+#;
+PROBLEM:
+;As part of designing a system to keep track of student grades, you
+;are asked to design a data definition to represent the letter grade 
+;in a course, which is one of A, B or C.
+
+;; LetterGrade is one of:
+;; - "A"
+;; - "B"
+;; - "C"
+;; interp. the letter grade in a course
+(define LG1 "A")
+(define LG2 "B")
+(define LG3 "C")
+;;<examples are reduntant for enumerations>
+
+(define (fn-for-letter-grade lg)
+  (cond [(string=? lg "A") (...)
+         (string=? lg "B") (...)
+         (string=? lg "C") (...)])
+  )
+
+;; Tempalte rules used:
+;; -one of: 3 cases
+;; -atomic distinct value: "A"
+;; -atomic distinct value: "B"
+;; -atomic distinct value: "C"
+```
