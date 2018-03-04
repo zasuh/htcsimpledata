@@ -372,3 +372,128 @@ PROBLEM:
 ;; -atomic non-distinct: Natural [1, 10]
 ;; -atomic distinct: "complete"
 ```
+
+### March 4th 2018 ###
+- Functions for previous problems with data definitions:
+```
+;; Data definitions:
+
+;; SeatNum is Natural[1, 32]
+;; Interp. Seat numbers in a row, 1 and 32 are aisle seats
+(define SN1  1) ;aisle
+(define SN2 12) ;middle
+(define SN3 32) ;aisle
+#;
+(define (fn-for-seat-num sn)
+  (... sn)) 
+
+;; Template rules used:
+;;  atomic non-distinct: Natural[1, 32]
+
+
+;; Functions:
+
+;; SeatNum -> Boolean
+;; Produce true if the given number is on the aisle
+(check-expect (aisle? 1) true)
+(check-expect (aisle? 16) false)
+(check-expect (aisle? 32) true)
+
+
+;(define (aisle? sn) false) ;stub
+; <use template from SeatNum>
+(define (aisle sn)
+  (or (= sn 1)
+      (= sn 32))) 
+```
+```
+;; Data definitions:
+
+;; LetterGrade is one of: 
+;;  - "A"
+;;  - "B"
+;;  - "C"
+;; interp. the letter grade in a course
+;; <examples are redundant for enumerations>
+#;
+(define (fn-for-letter-grade lg)
+  (cond [(string=? lg "A") (...)]
+        [(string=? lg "B") (...)]
+        [(string=? lg "C") (...)]))
+
+;; Template rules used:
+;;  one-of: 3 cases
+;;  atomic distinct: "A"
+;;  atomic distinct: "B"
+;;  atomic distinct: "C"
+
+
+;; FUNCTIONS:
+
+;; LetterGrade -> LetterGrade
+;; Produce next highest letter grade (no change for A)
+(check-expect (bump-up "A") "A")
+(check-expect (bump-up "B") "A")
+(check-expect (bump-up "C") "B")
+
+; stub(define (bump-up lg) "A")
+;<use template from LetterGrade>
+
+(define (bump-up lg)
+  (cond [(string=? lg "A") "A"]
+        [(string=? lg "B") "A"]
+        [(string=? lg "C") "B"]))
+```
+```
+#; You are asked to contribute to the design for a very simple New Year's
+Eve countdown display. You already have the data definition given below. 
+You need to design a function that consumes Countdown and produces an
+image showing the current status of the countdown. 
+
+(require 2htdp/image)
+
+;; Data definitions:
+
+;; Countdown is one of:
+;;  - false
+;;  - Natural[1, 10]
+;;  - "complete"
+;; interp.
+;;    false           means countdown has not yet started
+;;    Natural[1, 10]  means countdown is running and how many seconds left
+;;    "complete"      means countdown is over
+(define CD1 false)
+(define CD2 10)          ;just started running
+(define CD3  1)          ;almost over
+(define CD4 "complete")
+#;
+(define (fn-for-countdown c)
+  (cond [(false? c) (...)]
+        [(and (number? c) (<= 1 c) (<= c 10)) (... c)]
+        [else (...)]))
+
+;; Template rules used:
+;;  - one of: 3 cases
+;;  - atomic distinct: false
+;;  - atomic non-distinct: Natural[1, 10]
+;;  - atomic distinct: "complete"
+
+;; Functions:
+
+;; CountDown -> Image
+;; Produce nice image of current state of countdown
+(check-expect (countdown-to-image false) (square 0 "solid" "white"))
+(check-expect (countdown-to-image 5) (text (number->string 5) 24 "black"))
+(check-expect (countdown-to-image "complete") (text "Happy New Year!!!" 24 "red"))
+
+; stub(define (countdown-to-image c) (square 0 "solid" "white"))
+;<use template from Countdown>
+
+(define (countdown-to-image c)
+  (cond [(false? c)
+         (square 0 "solid" "white")]
+        [(and (number? c) (<= 1 c) (<= c 10))
+         (text (number->string c) 24 "black")]
+        [else
+         (text "Happy New Year!!!" 24 "red")]))
+```
