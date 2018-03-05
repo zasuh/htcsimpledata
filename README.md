@@ -497,3 +497,6 @@ image showing the current status of the countdown.
         [else
          (text "Happy New Year!!!" 24 "red")]))
 ```
+
+### March 5th 2018 ###
+- Information leads to data definition which leads to function definition.
