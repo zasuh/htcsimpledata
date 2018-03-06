@@ -500,3 +500,44 @@ image showing the current status of the countdown.
 
 ### March 5th 2018 ###
 - Information leads to data definition which leads to function definition.
+
+### March 6th 2018 ###
+- HtDD P2 - Demolish:
+```
+;; DATA DEFINITION
+;; BuildingStatus is one of:
+;; - "new"
+;; - "old"
+;; - "heritage"
+;; interp. the status of a building in downtown Vancouver
+
+;; <examples are redundant for enumerations>
+
+#;
+(define (fn-for-building-status bs)
+  (cond [(string=? "new" bs) (...)]
+        [(string=? "old" bs) (...)]
+        [(string=? "heritage" bs) (...)]))
+
+;; Template rules used:
+;; - one of: 3 cases
+;;  - atomic distinct: "new"
+;;  - atomic distinct: "old"
+;;  - atomic distinct: "heritage"
+
+;; FUNCTION DEFINITION
+;; String -> Boolean
+;; produces true if the building status is old and false if the status is new or heritage
+
+(check-expect (demolish? "new") false)
+(check-expect (demolish? "old") true)
+(check-expect (demolish? "heritage") false)
+
+; stub (define (demolish? bs) false)
+
+; <template taken from data definition>
+(define (demolish? bs)
+  (cond [(string=? "new" bs) false]
+        [(string=? "old" bs) true]
+        [else false]))
+```
