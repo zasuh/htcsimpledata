@@ -541,3 +541,57 @@ image showing the current status of the countdown.
         [(string=? "old" bs) true]
         [else false]))
 ```
+
+### March 7th 2018 ###
+- Solution for HtDD P3 - Rocket Descent
+```
+; You are designing a program to track a rocket's journey as it descends 
+; 100 kilometers to Earth. You are only interested in the descent from 
+; 100 kilometers to touchdown. Once the rocket has landed it is done.
+; 
+; Design a data definition to represent the rocket's remaining descent. 
+; Call it RocketDescent.
+
+
+;; RocketDescent is Integer[0, 100]
+;; interp. the number of kilometers remaining untill touchdown
+(define RD1 100) ;start
+(define RD2 50) ;middle
+(define RD3 0) ;end
+
+#;
+(define (fn-for-rocket-descent rd)
+    (cond [(and (number? rd)
+              (<   0 rd)
+              (<= rd 100))
+         (... rd)]
+         [else  (...)])) 
+
+;; Template rules used;
+;; -one of: 2 cases
+;; -atomic non-distinct: Integer[0, 100]
+;; -atomic distinct: false
+
+; Design a function that will output the rocket's remaining descent distance 
+; in a short string that can be broadcast on Twitter. 
+; When the descent is over, the message should be "The rocket has landed!".
+; Call your function rocket-descent-to-msg.
+
+
+;; RocketDescent -> String
+;; Takes the number of the distance and produces a string based on the distance
+(check-expect (rocket-descent-to-msg 100) "Distance is 100 km")
+(check-expect (rocket-descent-to-msg 50) "Distance is 50 km")
+(check-expect (rocket-descent-to-msg 0) "The rocket has landed!")
+
+
+;(define (rocket-descent-to-msg rd) "") stub
+
+; <template from RocketDescent>
+(define (rocket-descent-to-msg rd)
+    (cond [(and (number? rd)
+              (<   0 rd)
+              (<= rd 100))
+         (string-append "Distance is " (number->string rd) "km")]
+         [else  "The rocket has landed"])) 
+```
