@@ -718,3 +718,61 @@ image showing the current status of the countdown.
   (cond [(number? h) (add1 h)]
         [else h]))
 ```
+### March 9th 2018 ###
+- The first phase of the How to Design Worlds (HtDW) recipe is to analyze the problem to identify constant information, changing information and required big-bang options.
+- The second phase of the How to Design Worlds (HtDW) involves going from the analysis to the overall structure of the main program. This is our first example of a larger program, and we use the wish-list technique to manage the overall design work.
+```
+(require 2htdp/image)
+(require 2htdp/universe)
+
+;; A cat that walks from left to right across the screen.
+
+;; =================
+;; Constants:
+(define WIDTH 600)
+(define HEIGHT 400)
+
+(define CTR-Y (/ HEIGHT 2))
+
+(define MTS (empty-scene WIDTH HEIGHT))
+
+(define CAT-IMG .)
+
+;; =================
+;; Data definitions:
+
+;; Cat is Number
+;;interp. x position of the car in screen coordinates
+(define C1 0)
+(define C2 (/ WIDTH 2))
+(define C3 WIDTH)
+
+#;
+(define (fn-for-cat c)
+  (... c))
+
+;; Template rules used:
+;; - atomic non-distinct: Number
+
+;; =================
+;; Functions:
+
+;; Cat -> Cat
+;; start the world with ...
+;; 
+(define (main c)
+  (big-bang c                       ; Cat
+            (on-tick   advance-cat) ; Cat -> Cat
+            (to-draw   render)))    ; Cat -> Image
+
+;; Cat -> Cat
+;; produce the next cat, by advancing it 1 pixel to right
+;; !!!
+(define (advance-cat Cat) 0)
+
+
+;; Cat -> Image
+;; render the cat image at appropriate place on MTS
+;; !!!
+(define (render c) MTS)
+```
