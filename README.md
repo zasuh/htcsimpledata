@@ -924,3 +924,117 @@ image showing the current status of the countdown.
 ```
 - We now extend the cat program to respond to keyboard events.
 ```
+
+### March 11th 2018 ###
+- Solution for HtDW P1 - Countdown:
+```
+(require 2htdp/image)
+(require 2htdp/universe)
+
+; Design an animation of a simple countdown. 
+; 
+; Your program should display a simple countdown, that starts at ten, and
+; decreases by one each clock tick until it reaches zero, and stays there.
+; 
+; To make your countdown progress at a reasonable speed, you can use the 
+; rate option to on-tick. If you say, for example, 
+; (on-tick advance-countdown 1) then big-bang will wait 1 second between 
+; calls to advance-countdown.
+; 
+; Remember to follow the HtDW recipe! Be sure to do a proper domain 
+; analysis before starting to work on the code file.
+; 
+; Once you are finished the simple version of the program, you can improve
+; it by reseting the countdown to ten when you press the spacebar.
+
+
+;; Count down program that counts from 10 to 0.
+
+;; =============
+;; Constants
+
+(define WIDTH 100)
+(define HEIGHT 100)
+
+(define CTR-Y (/ HEIGHT 2))
+(define CTR-X (/ WIDTH 2))
+
+(define MTS (empty-scene WIDTH HEIGHT))
+
+(define TEXT-SIZE 36)
+(define TEXT-COLOR "black")
+
+;; =============
+;; Data definition
+
+;; CountDown is Natural[0, 10]
+;; interp. Numbers that will be displayed for the countdown
+
+(define START-TIME 10)
+(define IN-PROGRESS 5)
+(define END-TIME 0)
+
+#;
+(define (fn-for-countdown cd)
+  (... cd))
+
+;; Templates used:
+;; -atomic non-distinct: Natural[0, 10]
+
+;; =============
+;; Functions
+
+;; Countdown -> Countdown
+;; called to run the animation, starting with (main 10)
+;; no tests required for main function
+
+(define (main cd)
+  (big-bang cd
+    (on-tick advance-countdown 1) ; Countdown -> Countdown
+    (to-draw render-countdown)    ; Countdown -> Image
+    (on-key handle-key)))         ; Countdown KeyEvent -> Countdown
+
+;; Countdown -> Countdown
+;; If cd = 0, keep 0, otherwise remove 1
+(check-expect (advance-countdown 10) 9)
+(check-expect (advance-countdown 5) 4)
+(check-expect (advance-countdown 3) 2)
+(check-expect (advance-countdown 0) 0)
+
+
+;(define (advance-countdown cd) 0) ;stub
+;<template taken from data definition>
+
+(define (advance-countdown cd)
+  (if (= cd 0)
+      0
+      (- cd 1)))
+
+;; Countdown -> Image
+;; Shows image (number) for the appropriate countdown
+(check-expect (render-countdown 10) (place-image (text "10" TEXT-SIZE TEXT-COLOR CTR-X CTR-Y MTS)))
+(check-expect (render-countdown 0) (place-image (text "0" TEXT-SIZE TEXT-COLOR CTR-X CTR-Y MTS)))
+
+;(define (render-countdown cd) MTS) ;stub
+;<template taken from data definition>
+
+(define (render-countdown cd)
+  (place-image (text (number->string)
+   TEXT-SIZE TEXT-COLOR CTR-X CTR-Y MTS)))
+
+;; Countdown KeyEvent -> Countdown
+;; reset the countdown to 10 when the spacebar is pressed
+(check-expect (handle-key 0 " ") 10)
+(check-expect (handle-key 5 " ") 10)
+(check-expect (handle-key 5 "left") 5)
+
+#;
+(define (handle-key cd ke)    ;stub
+  0)
+
+;<template from KeyEvent>
+
+(define (handle-key cd ke)
+  (cond [(key=? ke " ") 10]
+        [else cd]))
+```
