@@ -1038,3 +1038,39 @@ image showing the current status of the countdown.
   (cond [(key=? ke " ") 10]
         [else cd]))
 ```
+
+### March 12th 2018 ###
+- A new mechanism from the BSL language allows us to build multi-part (or compound) values and later to desconstruct the compound values to get the individual values back.
+- Basic design-struct definition:
+```
+(define-struct pos (x y))
+
+(define P1(make-pos 3 6);constructor)
+(define P2(make-pos 2 8))
+
+(pos-x P1) ;selector for x(3)
+(pos-y P2) ;selector for y(8)
+
+(pos? P1) ;predicate(true)
+(pos? "hello") ;predicate(false)
+```
+- Compound data definition example:
+```
+; Design a data definition to represent hockey players, including both 
+; their first and last names.
+
+
+(define-struct player(fn ln))
+;; Player is (make-player String String)
+;; interp. (make-player fn ln) is a hockey player with
+;; fn is first name and ln is last name.
+(define P1 (make-player "Bobby" "Orr"))
+(define P2 (make-player "Anze" "Kopitar"))
+
+(define (fn-for-player p)
+  (... (player-fn p) ;String
+       (player-ln p))) ;String
+
+;; Template rules used:
+;; - Compound: 2 fields
+```
