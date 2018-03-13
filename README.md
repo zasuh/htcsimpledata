@@ -1074,3 +1074,49 @@ image showing the current status of the countdown.
 ;; Template rules used:
 ;; - Compound: 2 fields
 ```
+
+### March 13th 2018 ###
+```
+;; Data definitions
+;; ================
+
+(define-struct movie (title budget rd))
+;; Movie is (make-movie String Number Number)
+;; interp. a movie with a title, a budget and release date
+
+(define MOVIE1 (make-movie "Titanic" 200000000 1997))
+(define MOVIE2 (make-movie "Avatar" 237000000 2009))
+(define MOVIE3 (make-movie "Avengers" 220000000 2012))
+
+#;
+(define (fn-for-movie m)
+  (... (movie-title m)  ;String
+       (movie-budget m) ;Number
+       (movie-rd m)))   ;Number
+;; Template rules used:
+;; - compound: 3 fields
+
+;; Functions
+;; ================
+
+;; Movie Movie -> String
+;; Consumes year of 2 movies release and produces the more recent movie
+(check-expect (chrono-movie M1 M2) "Avatar")
+(check-expect (chrono-movie M2 M3) "Avengers")
+
+;(define (chrono-movie m1 m2) "") ;stub
+
+#;
+(define (fn-for-movie m1 m2)
+  (... (movie-title m1)
+       (movie-budget m1)
+       (movie-rd m1)
+       (movie-title m2)
+       (movie-budget m2)
+       (movie-rd m2)))
+
+(define (chrono-movie m1 m2)
+  (if ( > (movie-rd m1) (movie-rd m2))
+      (movie-title m1)
+      (movie-title m2)))
+```
