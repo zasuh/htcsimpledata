@@ -1120,3 +1120,57 @@ image showing the current status of the countdown.
       (movie-title m1)
       (movie-title m2)))
 ```
+
+### March 14th 2018 ###
+- Solution for Compound P2 - Student:
+```
+; PROBLEM A:
+; 
+; Design a data definition to help a teacher organize their next field trip. 
+; On the trip, lunch must be provided for all students. For each student, track 
+; their name, their grade (from 1 to 12), and whether or not they have allergies.
+
+
+;; Data definitions
+;; ================
+
+(define-struct student (name grade allergies))
+;; Student is (make-student String Natural Boolean)
+;; interp. a student with a name, grade and whether or not they have allergies
+
+(define STUDENT1 (make-student "John" 6 true))
+(define STUDENT2 (make-student "Elise" 1 false))
+(define STUDENT3 (make-student "Tyler" 8 false))
+(define STUDENT1 (make-student "Kerry" 12 true))
+
+#;
+(define (fn-for-student s)
+  (... (student-name s)      ;String
+       (student-grade s)     ;Natural
+       (student-allergies s) ;Boolean
+;; Template rules used:
+;; - compound: 3 fields
+
+; To plan for the field trip, if students are in grade 6 or below, the teacher 
+; is responsible for keeping track of their allergies. If a student has allergies, 
+; and is in a qualifying grade, their name should be added to a special list. 
+; Design a function to produce true if a student name should be added to this list.
+
+       
+;; Functions
+;; ================
+
+;; Student -> Boolean
+;; Consumes student, produces true if student is in grade 6 or below, has allergies
+(check-expect (add-name? S1) true)
+(check-expect (add-name? S2) false)
+(check-expect (add-name? (make-student "Alex" 9 true) false))
+(check-expect (add-name? (make-student "Natasha" 4 false) false))
+
+;(define (add-name? s) false) ;stub
+; <template taken from data definition>
+
+(define (add-name? s)
+  (and (<= (student-grade 6)
+           (student-allergies? true)))
+```
