@@ -1174,3 +1174,70 @@ image showing the current status of the countdown.
   (and (<= (student-grade 6)
            (student-allergies? true)))
 ```
+
+### March 15th 2018 ###
+```
+(define WIDTH 400)
+(define HEIGHT 200)
+
+(defin CTR-Y (/ HEIGHT 2))
+
+(define RCOW .)
+
+(define LCOW .)
+
+(define MTS (empty-scene WIDTH HEIGHT))
+
+;; Data definitions
+;; ================
+(define-struct cow (x dx))
+;; Cow is (make-cow Natural[0, WIDTH] Interger)
+;; interp. (make-cow x dx) is a cow with x coordinate x and velocity dx
+;;         x is the center of the cow, x is in screen coordinates (pixels)
+;;         dx is in pixels per tick
+
+(define C1 (make-cow 10 3)) ;at 10, moving left -> right
+(define C2 (make-cow 20 -4)) ;at 20, moving right -> left
+
+#;
+(define (fn-for-cow c)
+  (... (cow-x c)    ;Natural[0, WIDTH]
+       (cow-dx c))) ;Integer
+
+;; Template rules used:
+;; - compound: 2 fields
+
+
+;; Functions
+;; ================
+
+;; Cow -> Cow
+;; called to make the cow go for a walk; start with (main (make-cow 0 3))
+;; no tests for main function
+(define (main c)
+  (big-bang c
+            (on-tick next-cow)       ; Cow -> Cow
+            (to-draw render-cow)     ; Cow -> Image
+            (on-key  handle-key)))   ; Cow KeyEvent -> Cow
+
+
+
+;; Cow -> Cow  
+;; increase cow x by dx; bounce off edges
+(check-expect (next-cow (make-cow 20 3)) (make-cow (+ 20 3) 3) ;middle
+(check-expect (next-cow (make-cow 20 -3)) (make-cow (-20 3) -3)
+              
+(check-expect (next-cow (make-cow (- WIDTH 3) 3) (make-cow WIDTH 3)) ;edge
+(check-expect (next-cow (make-cow 3 -3)) (make-cow 0 -3))
+
+(check-expect (next-cow (make-cow (- WIDTH 2) 3) (make-cow WIDTH -3)) ;tries to pass edge
+(check-expect (next-cow (make-cow 2 -3)) (make-cow 0 3))
+
+(define (next-cow c) c)      ;stub
+
+;<took template from Cow>
+(define (next-cow c)
+  (cond [(> (+ (cow-x c) (cow-dx c)) WIDTH) (make-cow WIDTH (- (cow-dx c)))]
+        [(< (+ (cow-x c) (cow-dx c)) 0) (make-cow 0 (- (cow-dx c)))]
+        [else (make-cow (+ (cow-x c) (cow-dx c)) (cow-dx c))]))
+```
