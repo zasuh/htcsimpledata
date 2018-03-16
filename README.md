@@ -1240,4 +1240,39 @@ image showing the current status of the countdown.
   (cond [(> (+ (cow-x c) (cow-dx c)) WIDTH) (make-cow WIDTH (- (cow-dx c)))]
         [(< (+ (cow-x c) (cow-dx c)) 0) (make-cow 0 (- (cow-dx c)))]
         [else (make-cow (+ (cow-x c) (cow-dx c)) (cow-dx c))]))
+
+;; Cow -> Image
+;; place appropriate cow image on MTS at (cow-x c) and CTR-Y
+(check-expect (render-cow (make-cow 99 3))
+              (place-image RCOW 99 CTR-Y MTS))
+(check-expect (render-cow (make-cow 33 -3))
+              (place-image RCOW 33 CTR-Y MTS))
+
+;(define (render-cow c) MTS)  ;stub  
+;<took template from Cow>
+
+(define (render-cow c)
+  (place-image (choose-image c) (cow-x c) CTR-Y MTS))
+
+;; Cow -> Image
+;; produce RCOW or LCOW depending on direction cow is going.
+(check-expect (choose-image (make-cow 10 3)) RCOW)
+(check-expect (choose-image (make-cow 10 -3)) LCOW)
+(check-expect (choose-image (make-cow 11 0)) LCOW)
+
+;(define (choose-image c) RCOW); stub
+;<took template from Cow>
+
+(define (choose-image c)
+  (if (> (cow-dx) 0)
+      RCOW
+      LCOW))
+
+;; Cow KeyEvent-> Cow
+;; reverse direction of cow travel when space bar is pressed
+(check-expect (handle-key 
+
+(define (handle-key c ke) c) ;stub
 ```
+
+### March 16th 2018 ###
