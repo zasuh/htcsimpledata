@@ -1275,4 +1275,138 @@ image showing the current status of the countdown.
 (define (handle-key c ke) c) ;stub
 ```
 
-### March 16th 2018 ###
+### March 18th 2018 ###
+- Solution for Compound Data Quiz:
+```
+; Create a program that allows you to click on a spot on the screen to create a flower,
+; which then grows over time.
+; If you click again the first flower is replaced by a new one at the new position.
+
+(require 2htdp/image)
+(require 2htdp/universe)
+
+;; Constants
+;; ==========
+
+(define WIDTH 500)
+(define HEIGHT 500)
+(define MTS (empty-scene 500 500 "lightgreen"))
+
+(define CENTER (cirlce 15 "solid" "lightyellow"))
+(define PETAL (ellipse 30 50 "solid" "purple"))
+(define FLOWER
+  (overlay (above CENTER(rectangle 1 10 0 "white"))
+           (overlay/align "center" "top" (above (beside (rotate 216 PETAL) (rectangle 1 1 0 "white")(rotate 144 PETAL))
+                                                (rotate 180 (beside (rotate 72 PETAL)(rectangle 10 0 0 "white")(rotate 288 PETAL))))
+                          (above (rectangle 1 61 0 "white") PETAL))))
+
+;; Data Definitions
+;; ================
+
+(define-struct flower (x y size))
+;; Flower is (make-flower Integer Integer Natural)
+;; interp. a flower with x position, y position and a side length
+(define F0 (make-flower 0 0 0))
+(define F1 (make-flower (/ WIDTH 2) (/HEIGHT 2) 15))
+
+#;
+(define (fn-for-flower)
+  (... (flower-x)
+       (flower-y)
+       (flower-size)))
+
+;; Template rules used:
+;; Compound: 3 fields
+
+
+;; Functions
+;; =========
+
+;; Flower -> Flower
+;; starts the animation: start with (main (make-flower (/ WIDTH 2) (/ HEIGHT 2) 0))
+
+(define (main f)
+  (big-bang f
+    (on-tick tock)          ;Flower -> Flower
+    (to-draw render)        ;Flower -> Image
+    (on-mouse handle-mouse) ;Flower Integer Integer MouseEvent -> Flower
+
+;; Flower -> Flower
+;; adds 1 to the size of the flower every clock tick
+(check-expect (tock (make-flower 0 0 5)) (make-flower 0 0 6))
+(check-expect (tock (make-flower 20 30 19)) (make-flower 20 30 20))    
+(check-expect (tock (make-flower 30 40 49)) (make-flower 30 40 50))
+
+;(define (tock f) f) ;stub
+; <took template from Flower>
+
+(define (tock f)
+  (make-flower (flower-x f)
+               (flower-y f)
+               (add1 (flower-size f))))
+
+;; Flower -> Flower
+;; renders the flower on the screen
+(check-expect (render (make-flower 10 10 20)) (place-image (rotate 20 (scale (/ 20 100) FLOWER))
+                                                           10 10 MTS))
+(check-expect (render (make-flower 20 20 0)) (place-image empty-image
+                                                           20 20 MTS))
+(check-expect (render (make-flower 10 10 40)) (place-image (rotate 40 (scale (/ 40 100) FLOWER))
+                                                           10 10 MTS))
+
+; (define (render f) MTS) ;stub
+; <took template from Flower>
+
+(define (render f)
+  (place-image (if (zero? (flower-size f))
+                    empty-image
+                    (rotate (flower-size f) (scale (/ (flower-size f) 100) FLOWER)))
+               (flower-x f)
+               (flower-y f)
+               MTS))
+
+;; Flower Integer Intger MouseEvent -> Flower
+;; replace the flower with a new one of size 0 at the mouse-Click
+(check-expect (handle-mouse (make-flower 0 0 0) 5 5 "button-down") (make-flower 5 5 0))
+(check-expect (handle-mouse (make-flower 0 0 0) 5 5 "button-up") (make-flower 0 0 0))
+(check-expect (handle-mouse (make-flower 50 50 55) 10 10 "button-down") (make-flower 10 10 0))
+
+; (define (handle-mouse f x y me) f) ;stub
+; <took template from MouseEvent>
+
+(define (handle-mouse f x y me)
+  (cond [(mouse=? me "button-down")(make-flower x y 0)]
+        [else f]))
+```
+- List constructinon and syntax:
+```
+(require 2htdp/image)
+
+empty
+
+(define L1(cons "Flames" empty)) ;a list with "Flames" in front of an empty list
+(define L2(cons "Leafs" (cons "Flames" empty))) ;list with 2 elements
+
+(cons (string-append "C" "anucks") empty)
+;; expressions that produce lists can be formed out of non-value expressions
+;; list values are formed out of values only, no other expressions
+
+;(cons 10 (cons 9 (cons 10 empty))) ;list with 3 elements
+(define L3(cons (square 10 "solid" "blue")
+      (cons (triangle 20 "solid" green)
+       empty)))
+
+(first L1) ;Flames
+(first L2) ;10
+(first L3) ;Blue Square of size 10
+
+(rest L1) ;empty
+(rest L2)
+(rest L3)
+
+(first (rest L2))        ;how do I get the second element of L2?
+(first (rest (rest L2))) ;third element
+
+(empty? empty) ;true
+(empty? L1)    ;false
+```
