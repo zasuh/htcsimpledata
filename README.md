@@ -1410,3 +1410,40 @@ empty
 (empty? empty) ;true
 (empty? L1)    ;false
 ```
+
+### March 19th 2018 ###
+```
+; Information:
+; UBC
+; McGill
+; Team Who Must Not Be Named
+; 
+; Data:
+; "UBC"
+; "McGill"
+; "Team Who Must Not Be Named
+; "
+; 
+; (cons "UBC"
+;      (cons "McGill") empty)
+
+
+;; ListOfString is one of:
+;; - empty
+;; - (cons String ListOfString)
+;; interp. a list of strings
+(define LOS1 empty)
+(define LOS2 (cons "McGill" empty))
+(define LOS3 (cons "UBC" (cons "McGill" empty)))
+
+(define (fn-for-los los)
+  (cond [(empty? los) (...)]
+        [else
+         (... (first los)    ;String
+              (fn-for-los (rest los)))])) ;ListOfString
+
+;; Template rules used:
+;; - one of: 2 cases
+;; - atomic distinct: empty
+;; - compound: (cons String ListOfString)
+```
