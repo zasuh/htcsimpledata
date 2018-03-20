@@ -1447,3 +1447,26 @@ empty
 ;; - atomic distinct: empty
 ;; - compound: (cons String ListOfString)
 ```
+
+### March 20th 2018 ###
+```
+;; Function
+;; ============
+
+;; ListOfString -> Boolean
+;; produce true if los includes "UBC"
+(check-expect (contains-ubc? empty) false)
+(check-expect (contains-ubc? (cons "McGill" empty)) false)
+(check-expect (contains-ubc? (cons "UBC" empty)) true)
+(check-expect (contains-ubc? (cons "McGill" (cons "UBC" empty))) true)
+
+;(define (contains-ubc los) false) ;stub
+;<took template from ListOfString>
+
+(define (contains-ubc? los)
+  (cond [(empty? los) false]
+        [else
+         (if (string=?  (first los) "UBC")
+             true
+             (contains-ubc? (rest los)))]))
+```
