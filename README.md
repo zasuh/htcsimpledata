@@ -1549,3 +1549,20 @@ empty
          (+ (first lon)          
             (sum (rest lon)))]))
 ```
+
+### March 22nd 2018 ###
+```
+;; ListOfNumber -> Natural
+;; produce total number of weights in consumed list
+(check-expect (count empty) 0)
+(check-expect (count (cons 12 empty)) (+ 1 0))
+(check-expect (count (cons 35 (cons 12 empty))) (+ 1 (+ 1 0)))
+
+;(define (count lon) 0) stub
+
+(define (count lon)
+  (cond [(empty? lon) 0]
+        [else
+         (+ 1
+              (count (rest lon)))]))
+```
