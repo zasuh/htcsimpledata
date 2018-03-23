@@ -1566,3 +1566,88 @@ empty
          (+ 1
               (count (rest lon)))]))
 ```
+
+### March 23rd 2018 ###
+- Solution for Self reference P2 - Double all:
+```
+;; Data definitions:
+
+;; ListOfNumber is one of:
+;;  - empty
+;;  - (cons Number ListOfNumber)
+;; interp. a list of numbers
+(define LON1 empty)
+(define LON2 (cons 60 (cons 42 empty)))
+#;
+(define (fn-for-lon lon)
+  (cond [(empty? lon) (...)]
+        [else
+         (... (first lon)
+              (fn-for-lon (rest lon)))]))
+
+;; Template rules used:
+;;  - one of: 2 cases
+;;  - atomic distinct: empty
+;;  - compound: (cons Number ListOfNumber)
+;;  - self-reference: (rest lon) is ListOfNumber
+
+;; Functions:
+
+;; ListOfNumber -> ListOfNumber
+;; produces multiplied by 2 ListOfNumber
+(check-expect (double-all empty) empty)
+(check-expect (double-all LON 2(cons 60 (cons 42 empty))))
+(check-expect (double-all (cons 10 (cons 20 (cons 40 empty))))
+              (cons 20 (cons 40 (cons 80 empty))))
+
+;(define (double-all lon) empty) ;stub
+;<took template from ListOfNumber>
+
+#;
+(define (double-all lon)
+  (cond [(empty? lon) empty]
+        [else
+         (cons (* 2 (first lon))
+              (double-all (rest lon)))]))
+```
+- Solution for Self Reference P5 - Largest:
+```
+;; Data definitions:
+
+;; ListOfNumber is one of:
+;;  - empty
+;;  - (cons Number ListOfNumber)
+;; interp. a list of numbers
+(define LON1 empty)
+(define LON2 (cons 60 (cons 42 empty)))
+#;
+(define (fn-for-lon lon)
+  (cond [(empty? lon) (...)]
+        [else
+         (... (first lon)
+              (fn-for-lon (rest lon)))]))
+
+;; Template rules used:
+;;  - one of: 2 cases
+;;  - atomic distinct: empty
+;;  - compound: (cons Number ListOfNumber)
+;;  - self-reference: (rest lon) is ListOfNumber
+
+;; Functions:
+
+;; ListOfNumber -> Number
+;; consumes a list of numbers and produces the largest number in the list
+(check-expect (largest empty) empty)
+(check-expect (largest (cons 4 (cons 7 (cons 9 empty)))) 9)
+(check-expect (largest (cons 14 (cons 10 (cons 50 (cons 3 (cons 49 empty)))))) 50)
+
+;(define (largest lon) 0) ;stub
+;<took template from ListOfNumber>
+
+(define (largest lon)
+  (cond [(empty? lon) 0]
+        [else
+         (if (> (first lon) (largest (rest lon)))
+              (first lon)
+              (largest (rest lon)))]))
+```
