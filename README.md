@@ -1651,3 +1651,115 @@ empty
               (first lon)
               (largest (rest lon)))]))
 ```
+
+### March 25th 2018 ###
+- Solution for Self-Reference P3 - Boolean List:
+```
+; Design a data definition to represent a list of booleans. Call it ListOfBoolean.
+
+
+;; =================
+;; Data definitions:
+
+;; ListOfBoolean is one of:
+;; - empty
+;; - (cons Boolean ListOfBoolean)
+;; interp. a list of booleans
+(define LOB1 empty)
+(define LOB2 (cons true (cons false empty)))
+
+#;
+(define (fn-for-lob lob)
+    (cond [(empty? lob) (...)]
+        [else
+         (... (first lob)
+              (fn-for-lob (rest lob)))]))
+
+;; Template rules used:
+;; - one of: 2 cases
+;; - atomic distinct: empty
+;; - compound: (cons Boolean ListOfBoolean)
+;; - self-reference: (rest lob) is ListOfBoolean
+
+; Design a function that consumes a list of boolean values and produces true 
+; if every value in the list is true. If the list is empty, your function 
+; should also produce true. Call it all-true?
+
+
+;; =================
+;; Functions:
+
+;; ListOfBoolean -> Boolean
+;; consumes a list of boolean values and produces true 
+;; if every value in the list is true. If list is empty also produces true.
+(check-expect (all-true? empty) true)
+(check-expect (all-true? (cons true (cons true (cons true empty)))) true)
+(check-expect (all-true? (cons false (cons true (cons false empty)))) false)
+(check-expect (all-true? (cons false (cons false (cons false empty)))) false)
+
+;(define (all-true? lob) false) ;stub
+;<took template from ListOfBoolean>
+
+(define (all-true? lob)
+    (cond [(empty? lob) true]
+        [else
+         (and (first lob)
+              (all-true? (rest lob)))]))
+```
+- Solution for Self-Reference P6 - Image List:
+```
+(require 2htdp/image)
+
+;; =================
+;; Data definitions:
+
+; Design a data definition to represent a list of images. Call it ListOfImage.
+
+
+;; ListOfImage is one of:
+;; - empty
+;; - (cons Image ListOfImage)
+;; interp. a list of images
+(define LOI1 empty)
+(define LOI2 (cons (circle 30 "solid" "black") empty))
+(define LOI3 (cons (circle 50 "solid" "red") (cons (circle 20 "solid" "blue") empty)))
+
+#;
+(define (fn-for-loi loi)
+    (cond [(empty? loi) (...)]
+        [else
+         (... (first loi)
+              (fn-for-loi (rest loi)))]))
+
+;; Template rules used:
+;; - one of: 2 cases
+;; - atomic distinct: empty
+;; - compound: (cons Image ListOfImage)
+;; - self-reference: (rest loi) is ListOfImage
+
+;; =================
+;; Functions:
+
+; Design a function that consumes a list of images and produces a number 
+; that is the sum of the areas of each image. For area, just use the image's 
+; width times its height.
+
+
+;; ListOfImage -> Number
+;; consumes list and produces sum of the areas of each image
+(check-expect (area-sum empty) empty)
+(check-expect (area-sum (cons (rectangle 5 10 "solid" "black")
+                              (cons (rectangle 4 8 "solid" "blue") empty))) 82)
+(check-expect (area-sum (cons (square 5 "solid" "black")
+                              (cons (square 6 "solid" "blue") empty))) 58)
+
+;(define (area-sum loi) empty) ;stub
+;<took template from ListOfImage>
+
+(define (area-sum loi)
+    (cond [(empty? loi) empty]
+        [else
+         (+ (* (image-width (first loi))
+                (image-height (first loi)))
+              (area-sum (rest loi)))]))
+```
