@@ -1763,3 +1763,54 @@ empty
                 (image-height (first loi)))
               (area-sum (rest loi)))]))
 ```
+
+### March 26th 2018 ###
+```
+(require 2htdp/image)
+
+;; Constants
+
+(define FONT-SIZE 24)
+(define FONT-COLOUR "black")
+
+(define Y-SCALE 1/200)
+(define BAR-WIDTH 30)
+(define BAR-COLOUR "lightblue")
+
+;; Data Definitions:
+
+(define-struct school (name tuition))
+;; School is (make-school String Natural)
+;; interp. name is the school's name tuition is international student's tuition in USD
+
+(define S1 (make-school "Schooll" 27797))
+(define S1 (make-school "School2" 44886))
+(define S1 (make-school "School3" 23867))
+
+(define (fn-for-school s)
+  (... (school-name s)
+       (school-tuition s)))
+
+;; Template rules used:
+;; - compound: (make-school String Natural)
+
+;; ListOfSchool is one of:
+;; - empty
+;; - cons (School ListOfSchool)
+;; interp. a list of schools
+(define LOS1 empty)
+(define LOS2 (cons S1 (cons S2 (cons S3 empty))))
+
+(define (fn-for-los los)
+  (cond [(empty? los) (...)]
+        [else
+         (... (first los)
+              (fn-for-los (rest los)))]))
+
+;; Template rules used:
+;; - one of: 2 cases
+;; - atomic distinct: empty
+;; - compound: (cons School ListOfSchool)
+;; - reference: (first los)
+;; - self-reference: (rest los) is ListOfSchool
+```
