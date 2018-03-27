@@ -1814,3 +1814,53 @@ empty
 ;; - reference: (first los)
 ;; - self-reference: (rest los) is ListOfSchool
 ```
+
+### March 27th 2018 ###
+- Continued from yesterday:
+```
+;; Functions:
+
+;; ListOfSchool -> Image
+;; produce bar chart showing names and tuitions of the consumed schools
+(check-expect (chart empty) (square 0 "solid" "white"))
+(check-expect (chart (cons (make-school "S1" 8000) empty))
+              (beside (overlay/align "center" "bottom"
+                      (rotate 90 (text "S1" FONT-SIZE FONT-COLOR))
+                      (rectangle BAR-WIDTH (* 8000 Y-SCALE) "outline" "black")
+                      (rectangle BAR-WIDTH (* 8000 Y-SCALE) "solid" BAR-COLOR))
+                      (square 0 "solid" "white")))
+(check-expect (chart (cons (make-school "S2" 12000) (cons (make-school "S1" 8000) empty)))
+              (beside/align "bottom" (overlay/align "center" "bottom"
+                      (rotate 90 (text "S1" FONT-SIZE FONT-COLOR))
+                      (rectangle BAR-WIDTH (* 12000 Y-SCALE) "outline" "black")
+                      (rectangle BAR-WIDTH (* 12000 Y-SCALE) "solid" BAR-COLOR))
+              (beside/align "bottom" (overlay/align "center" "bottom"
+                      (rotate 90 (text "S2" FONT-SIZE FONT-COLOR))
+                      (rectangle BAR-WIDTH (* 8000 Y-SCALE) "outline" "black")
+                      (rectangle BAR-WIDTH (* 8000 Y-SCALE) "solid" BAR-COLOR))
+              (square 0 "solid" "white"))))
+
+;(define (chart los) (square 0 "solid" "white")) ;stub
+
+(define (chart los)
+  (cond [(empty? los) (square 0 "solid" "white")]
+        [else
+         (beside/align "bottom"
+                       (make-bar (first los))
+                       (chart (rest los)))]))
+;; School -> Image
+;; produce the bar for a single school in the bar chart
+(check-expect (make-bar (make-school "S1" 8000))
+              (overlay/align "center" "bottom"
+                      (rotate 90 (text "S2" FONT-SIZE FONT-COLOR))
+                      (rectangle BAR-WIDTH (* 8000 Y-SCALE) "outline" "black")
+                      (rectangle BAR-WIDTH (* 8000 Y-SCALE) "solid" BAR-COLOR)))
+;; !!!
+;(define (make-bar s) (square 0 "solid" "white")) ;stub
+
+(define (make-bar s)
+  (overlay/align "center" "bottom"
+                 (rotate 90 (text (school-name s) FONT-SIZE FONT-COLOR))
+                 (rectangle BAR-WIDTH (* (school-tuition s) Y-SCALE) "outline" "black")
+                 (rectangle BAR-WIDTH (* (school-tuition s) Y-SCALE) "solid" BAR-COLOR)))
+```
