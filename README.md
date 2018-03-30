@@ -1960,3 +1960,58 @@ empty
                                       (rectangle BAR-WIDTH (* (school-tuition s) Y-SCALE) "solid" BAR-COLOR))
                        (chart (school-next s)))])) 
 ```
+
+### March 30th 2018###
+```
+;; Natural is one of:
+;;  - 0 base case
+;;  - (add1 Natural) SR
+;; interp. a natural number
+(define N0 0)         ;0
+(define N1 (add1 N0)) ;1
+(define N2 (add1 N1)) ;2
+
+(define (fn-for-natural n)
+  (cond [(zero? n) (...)]
+        [else
+         (... ;n                           ;template rules wouldn't normally put this
+          ;                            ;here, but we will see that we end up coming
+          ;                            ;back to add it
+          (fn-for-natural (sub1 n)))]))
+
+;; Template rules used:
+;;  - one-of: two cases
+;;  - atomic distinct: 0
+;;  - compound: (add1 Natural)
+;;  - self-reference: (sub1 n) is Natural
+
+;; Functions
+
+;; Natural -> Natural
+;; produce sum of Natural[0, n]
+(check-expect (sum 0) 0)
+(check-expect (sum 1) 1)
+(check-expect (sum 3) (+ 0 1 2 3))
+
+;(define (sum n) 0) ;stub 0
+
+(define (sum n)
+  (cond [(zero? n) 0]
+        [else
+         (+ n
+          (sum (sub1 n)))]))
+
+;; Natural -> ListOfNatural
+;; produce (cons n (cons n-1 ... empty)) not including 0
+(check-expect (to-list 0) empty)
+(check-expect (to-list 1) (cons 1 empty))
+(check-expect (to-list 2) (cons 2 (cons 1 empty)))
+
+;(define (to-list n) empty) ;stub
+
+(define (to-list n)
+  (cond [(zero? n) empty]
+        [else
+         (cons n
+          (to-list (sub1 n)))]))
+```
