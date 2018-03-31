@@ -1986,6 +1986,7 @@ empty
 ;;  - self-reference: (sub1 n) is Natural
 
 ;; Functions
+;; =============
 
 ;; Natural -> Natural
 ;; produce sum of Natural[0, n]
