@@ -2016,3 +2016,107 @@ empty
          (cons n
           (to-list (sub1 n)))]))
 ```
+
+### April 1st 2018 ###
+```
+;; NATURAL is one of:
+;; - empty
+;; - (cons "!" NATURAL)
+;; interp. a natural number, the number of "!" in the list is the number
+
+(define N0 empty)         ;0
+(define N1 (cons "!" N0)) ;1
+(define N2 (cons "!" N1)) ;2
+(define N3 (cons "!" N2))
+(define N4 (cons "!" N3))
+(define N5 (cons "!" N4))
+(define N6 (cons "!" N5))
+(define N7 (cons "!" N6))
+(define N8 (cons "!" N7))
+(define N9 (cons "!" N8))
+
+;; These are the primitives that operate NATURAL:
+(define (ZERO? n) (empty? n))  ;Any -> Boolean
+(define (ADD1 n) (cons "!" n)) ;NATURAL -> NATURAL
+(define (SUB1 n) (rest n))     ;NATURAL[>0] -> NATURAL
+
+#;
+(define (fn-for-NATURAL n)
+  (cond [(ZERO? n) (...)]
+        [else
+         (... n
+              (fn-for-NATURAL (SUB1 n)))]))
+
+;; ADDITION
+
+;; NATURAL NATURAL -> NATURAL
+;; produce a + b
+(check-expect (ADD N2 N0) N2)
+(check-expect (ADD N0 N3) N3)
+(check-expect (ADD N3 N4) N7)
+
+;(define (ADD a b) N0) ;stub
+
+(define (ADD a b)
+  (cond [(ZERO? b) a]
+        [else
+         (ADD (ADD1 a) (SUB1 b))])) ;take 1 away from b and add it to a
+
+
+;; SUBTRACTION
+
+;; NATURAL NATURAL -> NATURAL
+;; produce a - b
+(check-expect (SUB N2 N0) N2)
+(check-expect (SUB N5 N3) N2)
+(check-expect (SUB N7 N2) N5)
+
+;(define (SUB a b) N0) ;stub
+
+(define (SUB a b)
+  (cond [(ZERO? b) a]
+        [else
+         (SUB (SUB1 a) (SUB2 b))]))
+```
+
+- Solution for Natural P2 - Decreasing Image:
+```
+(define TEXT-SIZE 20)
+(define TEXT-COLOR "black")
+(define SPACING (text " " TEXT-SIZE TEXT-COLOR)
+
+;; Natural -> Image
+;; produces an image from n to 0 side by side
+(check-expect (decreasing-image 0) (text "0" 20 black))
+(check-expect (decreasing-image 3) (beside (text "3" 20 "black") SPACING
+                                           (text "2" 20 "black") SPACING
+                                           (text "1" 20 "black") SPACING
+                                           (text "0" 20 "black")))
+
+;(define (decreasing-image n) empty-image) ;stub
+
+(define (decreasing-image n)
+  (cond [(zero? n) (text "0" TEXT-SIZE TEXT-COLOR)]
+        [else
+         (beside (text (number -> string n) TEXT-SIZE TEXT-COLOR)
+              SPACING
+              (decreasing-image (sub1 n)))]))
+```
+
+- Solution for Natural P3 - Odd numbers:
+```
+;; Natural -> ListOfNatural
+;; produces a list of odd numbers from n down to 1
+(check-expect (odd-from-n 0) empty)
+(check-expect (odd-from-n 15) (list 13 11 9 7 5 3 1))
+(check-expect (odd-from-n 7) (list 7 5 3 1))
+
+;(define (odd-from-n n) empty) ;stub
+
+(define (odd-from-n n)
+  (cond [(zero? n) empty]
+        [else
+         (if (odd? n)
+             (cons n (odd-from-n) (sub1 n))
+             (odd-from-n (sub1 n)))]))
+```
