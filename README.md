@@ -2120,3 +2120,57 @@ empty
              (cons n (odd-from-n) (sub1 n))
              (odd-from-n (sub1 n)))]))
 ```
+
+### April 2nd 2018 ###
+- Functions composition Pt2:
+```
+(define BLANK (square 0 "solid" "black"))
+
+;; Data definitions:
+
+;; ListOfImage is one of:
+;; - empty
+;; - (cons Image ListOfImage)
+;; interp. An arbitrary number of images
+(define LOI1 empty)
+(define LOI2 (cons (rectangle 10 20 "solid" "black")
+                   (cons (rectangle 20 30 "solid" "red") empty)))
+
+#;
+(define (fn-for-loi loi)
+  (cond [(empty? loi) (...)]
+        [else
+         (... n
+              (fn-for-loi (rest loi)))]))
+
+;; Functions:
+
+;; ListOfImage -> Image
+;; lay out images left to right in increasing order of size
+(check-expect (arrange-images (cons (rectangle 10 20 "solid" "black")
+                              (cons (rectangle 20 30 "solid" "red") empty)))
+              (beside (rectangle 10 20 "solid" "black")
+                      (rectangle 20 30 "solid" "red")
+                      BLANK))
+(check-expect (arrange-images (cons (rectangle 20 30 "solid" "black")
+                              (cons (rectangle 10 20 "solid" "red") empty)))
+              (beside (rectangle 10 20 "solid" "black")
+                      (rectangle 20 30 "solid" "red")
+                      BLANK))
+
+
+;(define (arrange-images loi) BLANK) ;stub
+
+(define (arrange-images loi)
+  (layout-images (sort-images loi)))
+
+;; ListOfImage -> Image
+;; place images beside eachother in order of list
+;; !!!
+(define (layout-images loi) BLANK)
+
+;; ListOfImage -> ListOfImage
+;; sort images in increasing order of size
+;; !!!
+(define (sort-image loi) loi)
+```
