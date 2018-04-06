@@ -2666,3 +2666,40 @@ empty
 (define (solid-blob? b)
   (string=? b "solid"))
 ```
+
+### April 6th 2018 ###
+- List notations:
+```
+(list "a" "b" "c")
+
+(list (+ 1 2) (+ 3 4) (+ 5 6))
+; (list 3 7 11)
+; reduces down to values
+
+(define L1 (list "b" "c"))
+(define L2 (list "d" "e" "f"))
+
+(cons "a" L1) ;(list "a" "b" "c")
+(list "a" L1) ;(list "a" (list "b" "c"))
+;; to add one element to the list use cons
+
+(append L1 L2) ;(list "b" "c" "d" "e" "f")
+;; append combines its arguments together into a single list
+```
+```
+;; Accounts Natural -> String or false
+;; Try to find account with given number in accounts. If found produce name, otherwise produce false.
+(check-expect (lookup "abc" 1) "Account 1")
+(check-expect (lookup "dcj" 4) "Account 4")
+(check-expect (lookup "ilk" 2) false)
+
+;(define (lookup accs n) "") ;stub
+;<took template from Account>
+
+(define (lookup accs)
+  (cond [(empty? accs) empty]
+        [else
+         (... (account-num  (first accs)) ;Natural
+              (account-name (first accs)) ;String
+              (lookup (rest accs)))]))
+```
