@@ -2797,3 +2797,77 @@ empty
                [(> k (node-key t))    ;should we go right?
                      (lookup-key (node-r t) k)])]))
 ```
+
+### April 8th 2018 ###
+- Rendering a BST:
+```
+;; Functions:
+
+
+; PROBLEM:
+; 
+; Design a function that consumes a bst and produces a SIMPLE 
+; rendering of that bst. Emphasis on SIMPLE. You might want to 
+; skip the lines for example.
+; 
+
+
+;; BST -> Image
+;; produce a simple rendering of the tree
+(check-expect (render-bst false) MTTREE)
+(check-expect (render-bst BST1) (above (text (string-append "1" KEY-VAL-SEPARATOR "abc")
+                                        TEXT-SIZE
+                                        TEXT-COLOR)
+                                       VSPACE
+                                       (beside (render-bst false)
+                                               HSPACE
+                                               (render-bst false))))
+(check-expect (render-bst BST4) (above (text (string-append "4" KEY-VAL-SEPARATOR "dcj")
+                                             TEXT-SIZE
+                                             TEXT-COLOR)
+                                       VSPACE
+                                       (beside (render-bst false)
+                                               HSPACE
+                                               (render-bst (make-node 7 "ruf" false false)))))
+(check-expect (render-bst BST3) (above (text (string-append "3" KEY-VAL-SEPARATOR "ilk")
+                                             TEXT-SIZE
+                                             TEXT-COLOR)
+                                       VSPACE
+                                       (beside (render-bst BST1)
+                                               HSPACE
+                                               (render-bst BST4))))
+
+;(define (render-bst t) (square 0 "solid" "white")) ;stub
+
+(define (render-bst t)
+  (cond [(false? t) MTTREE]
+        [else
+         (above (text (string-append (number->string (node-key t)) KEY-VAL-SEPARATOR (node-val t))
+                    TEXT-SIZE
+                    TEXT-COLOR)
+                VSPACE
+              (beside (render-bst (node-l t))
+                      HSPACE
+                      (render-bst (node-r t))))]))
+```
+
+- Solution for BST P2 - Sum Keys:
+```
+; Functions:
+
+;; BST -> Number
+;; produces the sum of keys in a given BST
+(check-expect (sum-of-keys BST0) 0)
+(check-expect (sum-of-keys BST1) 3)
+(check-expect (sum-of-keys BST4) 4)
+
+;(define (sum-of-keys t) 0) ;stub
+;<took template from BST>
+
+(define (sum-of-keys t)
+  (cond [(false? t) 0]
+        [else
+         (+ (node-key t)        
+            (sum-of-keys (node-l t))
+            (sum-of-keys (node-r t)))]))
+```
