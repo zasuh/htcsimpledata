@@ -2704,7 +2704,7 @@ empty
               (lookup (rest accs)))]))
 ```
 
-### April 7th 2018 ###
+### April 8th 2018 ###
 - Binary Search Tree data definition example:
 ```
 ;; bst-dd-starter.rkt
@@ -2870,4 +2870,39 @@ empty
          (+ (node-key t)        
             (sum-of-keys (node-l t))
             (sum-of-keys (node-r t)))]))
+```
+
+### April 9th 2018 ###
+- Solution for BST P4 - Insert:
+```
+; Functions
+
+;; Integer String BST -> BST
+;; consumes an Integer, String and BST, and adds a node
+;; that has the given key and value to the tree
+(check-expect (add-node 2 "b" false) (make-node 2 "b" false false))
+(check-expect (add-node 1 "a" (make-node 2 "b" false false))
+              (make-node 2 "b" (make-node 1 "a" false false) false))
+(check-expect (insert 3 "c" 
+                      (make-node 2 "b" (make-node 1 "a" false false) false))
+              (make-node 2 "b" 
+                         (make-node 1 "a" false false)
+                         (make-node 3 "c" false false)))
+
+;(define (add-node 0 "" false) false) ;stub
+;<took template from BST>
+
+(define (add-node t)
+  (cond [(false? t) (make-node key val false false)]
+        [else
+         (if (< key (node-key bst))    
+             (make-node (node-key bst)
+                        (node-val bst)
+                        (add-node val (node-l bst))
+                        (node-r bst))
+             (make-node (node-key bst)
+                        (node-val bst)
+                        (node-l bst)
+                        (add-node val (node-r bst))
+                        ))]))
 ```
